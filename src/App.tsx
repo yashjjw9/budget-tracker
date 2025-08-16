@@ -18,6 +18,7 @@ function App() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [recurringPayments, setRecurringPayments] = useState<RecurringPayment[]>([]);
   const [showDummyDataPrompt, setShowDummyDataPrompt] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Initialize app with saved data
   useEffect(() => {
@@ -46,6 +47,19 @@ function App() {
   useEffect(() => {
     storage.saveRecurringPayments(recurringPayments);
   }, [recurringPayments]);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Element;
+      if (isMobileMenuOpen && !target.closest('nav')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   const handleLoadDummyData = () => {
     const dummyData = generateAllDummyData();
@@ -212,7 +226,8 @@ function App() {
         <div className="container">
           <h1>Budget Tracker</h1>
           
-          <div className="nav-tabs">
+          {/* Desktop Navigation */}
+          <div className="nav-tabs desktop-nav">
             {[
               { id: 'dashboard', label: 'Dashboard', icon: '📊' },
               { id: 'categories', label: 'Categories', icon: '🏷️' },
@@ -234,17 +249,39 @@ function App() {
           {/* Mobile menu button */}
           <button
             className="mobile-menu-btn btn btn-secondary btn-icon"
-            onClick={() => {
-              // Simple mobile menu toggle - could be enhanced with a proper mobile menu
-              const tabs: TabType[] = ['dashboard', 'categories', 'transactions', 'recurring', 'visualization'];
-              const currentIndex = tabs.indexOf(activeTab);
-              const nextIndex = (currentIndex + 1) % tabs.length;
-              setActiveTab(tabs[nextIndex]);
-            }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
           >
-            ☰
+            {isMobileMenuOpen ? '✕' : '☰'}
           </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="mobile-nav-menu">
+            <div className="mobile-nav-container">
+              {[
+                { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+                { id: 'categories', label: 'Categories', icon: '🏷️' },
+                { id: 'transactions', label: 'Transactions', icon: '💳' },
+                { id: 'recurring', label: 'Recurring', icon: '🔄' },
+                { id: 'visualization', label: 'Charts', icon: '📈' }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id as TabType);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`mobile-nav-tab ${activeTab === tab.id ? 'active' : ''}`}
+                >
+                  <span className="mobile-nav-icon">{tab.icon}</span>
+                  <span className="mobile-nav-label">{tab.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* Main content */}
