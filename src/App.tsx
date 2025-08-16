@@ -222,9 +222,9 @@ function App() {
   return (
     <div className="app">
       {/* Navigation */}
-      <nav>
-        <div className="container">
-          <h1>Budget Tracker</h1>
+      <nav className="main-navigation">
+        <div className="nav-container">
+          <h1 className="nav-title">Budget Tracker</h1>
           
           {/* Desktop Navigation */}
           <div className="nav-tabs desktop-nav">
@@ -248,9 +248,10 @@ function App() {
 
           {/* Mobile menu button */}
           <button
-            className="mobile-menu-btn btn btn-secondary btn-icon"
+            className="mobile-menu-btn"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? '✕' : '☰'}
           </button>
