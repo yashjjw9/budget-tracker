@@ -1,0 +1,174 @@
+.recurring-payments {
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 24px 0;
+}
+
+.payment-form {
+  max-width: 500px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.payments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.4);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(15px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.payment-item:hover {
+  background: rgba(255, 255, 255, 0.98);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.1);
+}
+
+.payment-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.payment-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+  flex-shrink: 0;
+  box-shadow: 0 3px 12px rgba(15, 23, 42, 0.15);
+}
+
+.payment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.payment-description {
+  font-weight: 700;
+  color: #0f172a;
+  font-size: 15px;
+}
+
+.payment-category {
+  font-size: 13px;
+  color: #6b7280;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 3px 10px;
+  border-radius: 16px;
+  font-weight: 500;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.payment-frequency {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.payment-amount {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.amount {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.amount.expense {
+  color: #dc2626;
+}
+
+.amount.income {
+  color: #059669;
+}
+
+.next-payment {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.payment-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.no-payments {
+  text-align: center;
+  padding: 40px 24px;
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.no-payments p {
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .recurring-payments {
+    padding: 16px 0;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .payment-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions .btn {
+    width: 100%;
+  }
+  
+  .payment-item {
+    padding: 16px;
+  }
+  
+  .payment-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
