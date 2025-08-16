@@ -638,7 +638,6 @@ p {
     0 8px 32px rgba(15, 23, 42, 0.08),
     0 4px 16px rgba(15, 23, 42, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  position: relative;
 }
 
 .nav-container {
@@ -732,10 +731,17 @@ nav .nav-tabs {
     0 8px 32px rgba(15, 23, 42, 0.08),
     0 4px 16px rgba(15, 23, 42, 0.04);
   animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 999;
+  z-index: 1001;
   max-height: calc(100vh - 72px);
   overflow-y: auto;
   border-radius: 0 0 20px 20px;
+  /* Ensure proper mobile behavior */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  /* iOS Safari improvements */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .mobile-nav-container {
@@ -764,6 +770,10 @@ nav .nav-tabs {
   text-align: left;
   position: relative;
   overflow: hidden;
+  /* Touch-friendly improvements */
+  min-height: 56px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .mobile-nav-tab::before {
@@ -850,12 +860,16 @@ nav .nav-tabs {
     line-height: 1.4;
   }
   
-  .desktop-nav {
-    display: none;
+  /* Hide desktop navigation on mobile */
+  .desktop-nav,
+  nav .nav-tabs.desktop-nav,
+  .nav-tabs.desktop-nav {
+    display: none !important;
   }
   
+  /* Ensure mobile menu button is visible */
   .mobile-menu-btn {
-    display: block;
+    display: flex !important;
     width: 48px;
     height: 48px;
     padding: 0;
@@ -867,9 +881,11 @@ nav .nav-tabs {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3);
-    display: flex;
     align-items: center;
     justify-content: center;
+    /* Touch-friendly improvements */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
   
   .mobile-menu-btn:hover {
@@ -912,6 +928,73 @@ nav .nav-tabs {
   nav h1 {
     font-size: 24px;
   }
+  
+  /* Ensure mobile navigation works properly */
+  .main-navigation {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .mobile-nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    /* Handle mobile viewport height issues */
+    max-height: calc(100vh - 72px);
+    max-height: calc(100dvh - 72px); /* Dynamic viewport height for mobile */
+    display: block !important;
+  }
+  
+  /* Ensure mobile navigation tabs are properly styled */
+  .mobile-nav-tab {
+    display: flex !important;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    text-decoration: none;
+    color: #64748b;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+    /* Touch-friendly improvements */
+    min-height: 56px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  /* Prevent body scroll when mobile menu is open */
+  body.mobile-menu-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+  
+  /* When mobile menu is open, ensure desktop nav is hidden */
+  body.mobile-menu-open .desktop-nav,
+  body.mobile-menu-open nav .nav-tabs.desktop-nav,
+  body.mobile-menu-open .nav-tabs.desktop-nav {
+    display: none !important;
+  }
+  
+  /* Ensure mobile navigation is visible when open */
+  body.mobile-menu-open .mobile-nav-menu {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+
   
   /* Form improvements for mobile */
   .form-group {
@@ -997,6 +1080,16 @@ nav .nav-tabs {
   .gap-4 { gap: 16px; }
   .gap-6 { gap: 24px; }
   .gap-8 { gap: 32px; }
+  
+  /* Force hide desktop navigation on mobile */
+  .nav-tabs.desktop-nav,
+  nav .nav-tabs.desktop-nav,
+  .desktop-nav {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }
 
 @media (min-width: 769px) {
@@ -1076,5 +1169,22 @@ nav .nav-tabs {
   
   .prompt-description {
     font-size: 14px;
+  }
+  
+  /* Mobile navigation improvements for very small screens */
+  .mobile-nav-menu {
+    max-height: calc(100vh - 64px);
+    max-height: calc(100dvh - 64px);
+  }
+  
+  .mobile-nav-tab {
+    padding: 14px 16px;
+    min-height: 52px;
+    font-size: 15px;
+  }
+  
+  .mobile-nav-icon {
+    font-size: 18px;
+    width: 22px;
   }
 }

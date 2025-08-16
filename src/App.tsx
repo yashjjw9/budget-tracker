@@ -48,7 +48,7 @@ function App() {
     storage.saveRecurringPayments(recurringPayments);
   }, [recurringPayments]);
 
-  // Close mobile menu when clicking outside
+  // Close mobile menu when clicking outside or pressing escape
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
@@ -57,8 +57,41 @@ function App() {
       }
     };
 
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      const target = event.target as Element;
+      if (isMobileMenuOpen && !target.closest('nav')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscapeKey);
+    document.addEventListener('touchstart', handleTouchStart);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
+      document.removeEventListener('touchstart', handleTouchStart);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.classList.add('mobile-menu-open');
+    } else {
+      document.body.classList.remove('mobile-menu-open');
+    }
+
+    return () => {
+      document.body.classList.remove('mobile-menu-open');
+    };
   }, [isMobileMenuOpen]);
 
   const handleLoadDummyData = () => {
