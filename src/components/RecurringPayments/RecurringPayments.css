@@ -136,39 +136,114 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .recurring-payments {
-    padding: 16px 0;
+    padding: 12px 0;
   }
   
   .form-row {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .payment-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 16px;
   }
   
   .payment-actions {
     width: 100%;
     justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .payment-actions .btn {
+    padding: 12px 16px;
+    min-height: 44px;
+    font-size: 14px;
   }
   
   .form-actions {
     flex-direction: column;
+    gap: 12px;
   }
   
   .form-actions .btn {
     width: 100%;
+    padding: 16px 20px;
+    min-height: 48px;
+    font-size: 16px;
+  }
+  
+  .payment-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  .payment-description {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  .payment-category {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .payment-amount {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .payment-frequency {
+    font-size: 12px;
+  }
+  
+  .payment-form {
+    padding: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .form-input,
+  .form-select {
+    padding: 16px;
+    font-size: 16px;
+    min-height: 48px;
+    border-radius: 12px;
+  }
+  
+  .no-payments {
+    padding: 32px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recurring-payments {
+    padding: 8px 0;
   }
   
   .payment-item {
-    padding: 16px;
+    padding: 14px;
   }
   
   .payment-icon {
     width: 40px;
     height: 40px;
-    font-size: 18px;
+    font-size: 16px;
+  }
+  
+  .no-payments {
+    padding: 24px 12px;
   }
 }

@@ -813,7 +813,7 @@ nav .nav-tabs {
 /* Responsive */
 @media (max-width: 768px) {
   .container {
-    padding: 0 16px;
+    padding: 0 12px;
   }
   
   .grid-cols-2,
@@ -823,22 +823,26 @@ nav .nav-tabs {
   }
   
   .card {
-    padding: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 16px;
   }
   
   .page-header {
-    padding: 32px 0 28px;
-    margin-bottom: 24px;
-    border-radius: 0 0 24px 24px;
+    padding: 24px 0 20px;
+    margin-bottom: 20px;
+    border-radius: 0 0 20px 20px;
   }
   
   .page-title {
-    font-size: 32px;
-    margin-bottom: 12px;
+    font-size: 28px;
+    margin-bottom: 10px;
+    line-height: 1.2;
   }
   
   .page-subtitle {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.4;
   }
   
   .desktop-nav {
@@ -847,37 +851,92 @@ nav .nav-tabs {
   
   .mobile-menu-btn {
     display: block;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 12px;
+    font-size: 18px;
   }
   
   .btn {
-    padding: 10px 20px;
-    min-height: 40px;
+    padding: 14px 20px;
+    min-height: 48px;
+    font-size: 16px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  
+  .btn-sm {
+    padding: 12px 16px;
+    min-height: 44px;
+    font-size: 15px;
+  }
+  
+  .btn-icon {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   nav .container {
-    height: 64px;
+    height: 72px;
+    padding: 0 16px;
   }
   
   nav h1 {
-    font-size: 22px;
+    font-size: 24px;
+  }
+  
+  /* Form improvements for mobile */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 12px;
+    min-height: 48px;
+    border: 2px solid rgba(226, 232, 240, 0.6);
+  }
+  
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }
   
   /* Dummy data prompt responsive */
   .dummy-data-prompt {
-    padding: 20px;
+    padding: 16px;
   }
   
   .prompt-container {
-    padding: 32px 24px;
-    border-radius: 24px;
+    padding: 24px 20px;
+    border-radius: 20px;
   }
   
   .prompt-title {
-    font-size: 28px;
+    font-size: 24px;
+    line-height: 1.2;
   }
   
   .prompt-description {
-    font-size: 16px;
+    font-size: 15px;
+    line-height: 1.4;
   }
   
   .prompt-actions {
@@ -886,12 +945,113 @@ nav .nav-tabs {
   }
   
   .prompt-info {
-    padding: 20px;
+    padding: 16px;
   }
+  
+  /* Mobile-specific improvements */
+  .mobile-optimized {
+    padding: 0;
+  }
+  
+  .mobile-full-width {
+    width: 100%;
+  }
+  
+  .mobile-stack {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .mobile-center {
+    text-align: center;
+  }
+  
+  /* Better spacing for mobile */
+  .mb-4 { margin-bottom: 16px; }
+  .mb-6 { margin-bottom: 24px; }
+  .mb-8 { margin-bottom: 32px; }
+  
+  .gap-4 { gap: 16px; }
+  .gap-6 { gap: 24px; }
+  .gap-8 { gap: 32px; }
 }
 
 @media (min-width: 769px) {
   .mobile-menu-btn {
     display: none;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 8px;
+  }
+  
+  .card {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+  
+  .page-header {
+    padding: 20px 0 16px;
+    margin-bottom: 16px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+  
+  .page-subtitle {
+    font-size: 14px;
+  }
+  
+  .btn {
+    padding: 12px 16px;
+    min-height: 44px;
+    font-size: 15px;
+  }
+  
+  .btn-sm {
+    padding: 10px 14px;
+    min-height: 40px;
+    font-size: 14px;
+  }
+  
+  .mobile-menu-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+  
+  nav .container {
+    height: 64px;
+    padding: 0 12px;
+  }
+  
+  nav h1 {
+    font-size: 20px;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 14px;
+    font-size: 15px;
+    min-height: 44px;
+  }
+  
+  .prompt-container {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+  
+  .prompt-title {
+    font-size: 20px;
+  }
+  
+  .prompt-description {
+    font-size: 14px;
   }
 }

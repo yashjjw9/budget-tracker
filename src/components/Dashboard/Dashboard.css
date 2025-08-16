@@ -344,63 +344,146 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .dashboard {
-    padding: 16px 0;
+    padding: 12px 0;
   }
   
   .budget-metrics {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
   
   .metric-item {
     padding: 16px;
+    border-radius: 16px;
   }
   
   .budget-progress {
-    padding: 20px;
+    padding: 16px;
   }
   
   .category-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 12px;
   }
   
   .transaction-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 16px;
   }
   
   .transaction-amount {
     align-items: flex-start;
+    width: 100%;
   }
   
   .category-item {
     padding: 16px;
-  }
-  
-  .transaction-item {
-    padding: 16px;
+    border-radius: 16px;
   }
   
   .category-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     font-size: 20px;
   }
   
+  .transaction-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+  
+  .month-selector {
+    max-width: 100%;
+    margin-top: 16px;
+  }
+  
+  .month-selector .form-select {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    min-height: 48px;
+  }
+  
+  .metric-value {
+    font-size: 22px;
+    font-weight: 800;
+  }
+  
+  .metric-label {
+    font-size: 13px;
+  }
+  
+  .category-name {
+    font-size: 15px;
+  }
+  
+  .transaction-description {
+    font-size: 14px;
+  }
+  
+  .transaction-category {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .amount {
+    font-size: 16px;
+  }
+  
+  .transaction-date {
+    font-size: 11px;
+  }
+  
+  .over-budget-warning {
+    padding: 12px 16px;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 8px 0;
+  }
+  
+  .budget-metrics {
+    gap: 10px;
+  }
+  
+  .metric-item {
+    padding: 14px;
+  }
+  
+  .budget-progress {
+    padding: 14px;
+  }
+  
+  .category-item,
+  .transaction-item {
+    padding: 14px;
+  }
+  
+  .category-icon,
   .transaction-icon {
     width: 40px;
     height: 40px;
     font-size: 18px;
   }
   
-  .month-selector {
-    max-width: 100%;
-  }
-  
   .metric-value {
     font-size: 20px;
+  }
+  
+  .page-title {
+    font-size: 24px;
+  }
+  
+  .page-subtitle {
+    font-size: 14px;
   }
 }

@@ -326,60 +326,73 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .transactions {
-    padding: 16px 0;
+    padding: 12px 0;
   }
   
   .financial-metrics {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
   
   .metric-item {
     padding: 16px;
+    border-radius: 16px;
   }
   
   .financial-summary {
     flex-direction: column;
     gap: 16px;
-    padding: 20px;
+    padding: 16px;
     text-align: center;
+    border-radius: 16px;
   }
   
   .form-row {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .transaction-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 16px;
   }
   
   .transaction-actions {
     width: 100%;
     justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .transaction-actions .btn {
+    padding: 12px 16px;
+    min-height: 44px;
+    font-size: 14px;
   }
   
   .form-actions {
     flex-direction: column;
+    gap: 12px;
   }
   
   .form-actions .btn {
     width: 100%;
-  }
-  
-  .transaction-item {
-    padding: 16px;
+    padding: 16px 20px;
+    min-height: 48px;
+    font-size: 16px;
   }
   
   .transaction-icon {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     font-size: 18px;
   }
   
   .filter-controls {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .type-selector {
@@ -387,8 +400,15 @@
     gap: 12px;
   }
   
+  .type-selector .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px;
+    min-height: 48px;
+  }
+  
   .no-transactions {
-    padding: 40px 20px;
+    padding: 32px 16px;
   }
   
   .no-transactions-icon {
@@ -404,6 +424,95 @@
   }
   
   .metric-value {
+    font-size: 22px;
+    font-weight: 800;
+  }
+  
+  .metric-label {
+    font-size: 13px;
+  }
+  
+  .transaction-description {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  .transaction-category {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  .amount {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  
+  .transaction-date {
+    font-size: 11px;
+  }
+  
+  .transaction-form {
+    padding: 16px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 16px;
+    font-size: 16px;
+    min-height: 48px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactions {
+    padding: 8px 0;
+  }
+  
+  .financial-metrics {
+    gap: 10px;
+  }
+  
+  .metric-item,
+  .financial-summary,
+  .transaction-item {
+    padding: 14px;
+  }
+  
+  .transaction-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .metric-value {
     font-size: 20px;
+  }
+  
+  .no-transactions {
+    padding: 24px 12px;
+  }
+  
+  .no-transactions-icon {
+    font-size: 40px;
+  }
+  
+  .no-transactions-title {
+    font-size: 18px;
+  }
+  
+  .no-transactions-description {
+    font-size: 13px;
   }
 }
