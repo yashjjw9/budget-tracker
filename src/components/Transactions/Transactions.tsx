@@ -30,6 +30,14 @@ const Transactions: React.FC<TransactionsProps> = ({
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'expense' | 'income'>('all');
+  const [dateRange, setDateRange] = useState({
+    startDate: '',
+    endDate: ''
+  });
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [transactionsPerPage, setTransactionsPerPage] = useState(10);
 
   const filteredTransactions = useMemo(() => {
     return transactions.filter(transaction => {
@@ -37,9 +45,50 @@ const Transactions: React.FC<TransactionsProps> = ({
       const matchesCategory = !filterCategory || transaction.categoryId === filterCategory;
       const matchesType = filterType === 'all' || transaction.type === filterType;
       
-      return matchesSearch && matchesCategory && matchesType;
+      // Date range filtering
+      let matchesDateRange = true;
+      if (dateRange.startDate && dateRange.endDate) {
+        const transactionDate = new Date(transaction.date);
+        const startDate = new Date(dateRange.startDate);
+        const endDate = new Date(dateRange.endDate);
+        // Set end date to end of day for inclusive range
+        endDate.setHours(23, 59, 59, 999);
+        matchesDateRange = transactionDate >= startDate && transactionDate <= endDate;
+      } else if (dateRange.startDate) {
+        const transactionDate = new Date(transaction.date);
+        const startDate = new Date(dateRange.startDate);
+        matchesDateRange = transactionDate >= startDate;
+      } else if (dateRange.endDate) {
+        const transactionDate = new Date(transaction.date);
+        const endDate = new Date(dateRange.endDate);
+        endDate.setHours(23, 59, 59, 999);
+        matchesDateRange = transactionDate <= endDate;
+      }
+      
+      return matchesSearch && matchesCategory && matchesType && matchesDateRange;
     });
-  }, [transactions, searchTerm, filterCategory, filterType]);
+  }, [transactions, searchTerm, filterCategory, filterType, dateRange]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredTransactions.length / transactionsPerPage);
+  const startIndex = (currentPage - 1) * transactionsPerPage;
+  const endIndex = startIndex + transactionsPerPage;
+  const currentTransactions = filteredTransactions.slice(startIndex, endIndex);
+
+  // Reset to first page when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, filterCategory, filterType, dateRange, transactionsPerPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top of transactions list
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const clearDateRange = () => {
+    setDateRange({ startDate: '', endDate: '' });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -208,6 +257,57 @@ const Transactions: React.FC<TransactionsProps> = ({
               <option value="expense">Expenses Only</option>
               <option value="income">Income Only</option>
             </select>
+            
+            <select
+              className="form-select"
+              value={transactionsPerPage}
+              onChange={(e) => {
+                setTransactionsPerPage(Number(e.target.value));
+                setCurrentPage(1); // Reset to first page when changing page size
+              }}
+            >
+              <option value={5}>5 per page</option>
+              <option value={10}>10 per page</option>
+              <option value={20}>20 per page</option>
+              <option value={50}>50 per page</option>
+            </select>
+          </div>
+          
+          {/* Date Range Filter */}
+          <div className="date-range-filter">
+            <div className="date-inputs">
+              <div className="date-input-group">
+                <label htmlFor="start-date" className="date-label">From:</label>
+                <input
+                  type="date"
+                  id="start-date"
+                  className="form-input date-input"
+                  value={dateRange.startDate}
+                  onChange={(e) => setDateRange(prev => ({ ...prev, startDate: e.target.value }))}
+                />
+              </div>
+              
+              <div className="date-input-group">
+                <label htmlFor="end-date" className="date-label">To:</label>
+                <input
+                  type="date"
+                  id="end-date"
+                  className="form-input date-input"
+                  value={dateRange.endDate}
+                  onChange={(e) => setDateRange(prev => ({ ...prev, endDate: e.target.value }))}
+                  min={dateRange.startDate} // End date can't be before start date
+                />
+              </div>
+            </div>
+            
+            {(dateRange.startDate || dateRange.endDate) && (
+              <button
+                onClick={clearDateRange}
+                className="btn btn-secondary btn-sm clear-date-btn"
+              >
+                Clear Date Filter
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -370,48 +470,124 @@ const Transactions: React.FC<TransactionsProps> = ({
               )}
             </div>
           ) : (
-            <div className="transactions-list">
-              {filteredTransactions.map(transaction => {
-                const category = categories.find(c => c.id === transaction.categoryId);
-                return (
-                  <div key={transaction.id} className="transaction-item">
-                    <div className="transaction-info">
-                      <div className="transaction-icon" style={{ backgroundColor: category?.color || '#6b7280' }}>
-                        {category?.icon || '💰'}
+            <>
+              <div className="transactions-list">
+                {currentTransactions.map(transaction => {
+                  const category = categories.find(c => c.id === transaction.categoryId);
+                  return (
+                    <div key={transaction.id} className="transaction-item">
+                      <div className="transaction-info">
+                        <div className="transaction-icon" style={{ backgroundColor: category?.color || '#6b7280' }}>
+                          {category?.icon || '💰'}
+                        </div>
+                        <div className="transaction-details">
+                          <div className="transaction-description">{transaction.description}</div>
+                          <div className="transaction-category">{category?.name || 'Uncategorized'}</div>
+                        </div>
                       </div>
-                      <div className="transaction-details">
-                        <div className="transaction-description">{transaction.description}</div>
-                        <div className="transaction-category">{category?.name || 'Uncategorized'}</div>
+                      
+                      <div className="transaction-amount">
+                        <div className={`amount ${transaction.type === 'expense' ? 'expense' : 'income'}`}>
+                          {transaction.type === 'expense' ? '-' : '+'}{formatCurrency(transaction.amount)}
+                        </div>
+                        <div className="transaction-date">
+                          {formatDate(transaction.date)}
+                        </div>
+                      </div>
+                      
+                      <div className="transaction-actions">
+                        <button
+                          onClick={() => handleEdit(transaction)}
+                          className="btn btn-secondary btn-sm"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => onDeleteTransaction(transaction.id)}
+                          className="btn btn-danger btn-sm"
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
-                    
-                    <div className="transaction-amount">
-                      <div className={`amount ${transaction.type === 'expense' ? 'expense' : 'income'}`}>
-                        {transaction.type === 'expense' ? '-' : '+'}{formatCurrency(transaction.amount)}
-                      </div>
-                      <div className="transaction-date">
-                        {formatDate(transaction.date)}
-                      </div>
-                    </div>
-                    
-                    <div className="transaction-actions">
-                      <button
-                        onClick={() => handleEdit(transaction)}
-                        className="btn btn-secondary btn-sm"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => onDeleteTransaction(transaction.id)}
-                        className="btn btn-danger btn-sm"
-                      >
-                        Delete
-                      </button>
-                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="pagination-controls">
+                  <div className="pagination-info">
+                    <span className="pagination-text">
+                      Showing {startIndex + 1}-{Math.min(endIndex, filteredTransactions.length)} of {filteredTransactions.length} transactions
+                    </span>
                   </div>
-                );
-              })}
-            </div>
+                  <div className="pagination-buttons">
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      ← Previous
+                    </button>
+                    
+                    <div className="page-numbers">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
+                        // Show first page, last page, current page, and pages around current page
+                        if (
+                          page === 1 ||
+                          page === totalPages ||
+                          (page >= currentPage - 1 && page <= currentPage + 1)
+                        ) {
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => handlePageChange(page)}
+                              className={`btn btn-sm ${page === currentPage ? 'btn-primary' : 'btn-secondary'}`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        } else if (
+                          page === currentPage - 2 ||
+                          page === currentPage + 2
+                        ) {
+                          return <span key={page} className="page-ellipsis">...</span>;
+                        }
+                        return null;
+                      })}
+                    </div>
+                    
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="btn btn-secondary btn-sm"
+                    >
+                      Next →
+                    </button>
+                  </div>
+                  
+                  {/* Quick page navigation */}
+                  <div className="quick-navigation">
+                    <span className="quick-nav-text">Go to page:</span>
+                    <input
+                      type="number"
+                      min="1"
+                      max={totalPages}
+                      value={currentPage}
+                      onChange={(e) => {
+                        const page = parseInt(e.target.value);
+                        if (page >= 1 && page <= totalPages) {
+                          handlePageChange(page);
+                        }
+                      }}
+                      className="quick-nav-input"
+                    />
+                    <span className="quick-nav-total">of {totalPages}</span>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -194,7 +194,7 @@ const Categories: React.FC<CategoriesProps> = ({
             <span className="card-subtitle">{categories.length} category{categories.length !== 1 ? 's' : ''} created</span>
           )}
         </div>
-        <div className="categories-list">
+        <div className="categories-grid">
           {categories.length === 0 ? (
             <div className="no-categories">
               <div className="no-categories-content">
@@ -215,16 +215,16 @@ const Categories: React.FC<CategoriesProps> = ({
             </div>
           ) : (
             categories.map(category => (
-              <div key={category.id} className="category-item">
-                <div className="category-info">
+              <div key={category.id} className="category-card">
+                <div className="card-header-compact">
                   <div className="category-icon" style={{ backgroundColor: category.color }}>
                     {category.icon || '📊'}
                   </div>
-                  <div className="category-details">
+                  <div className="category-title">
                     <h4 className="category-name">{category.name}</h4>
-                    <p className="category-budget">
+                    <div className="category-budget">
                       Monthly Budget: {formatCurrency(category.budget)}
-                    </p>
+                    </div>
                   </div>
                 </div>
                 

@@ -255,17 +255,98 @@
 .filters-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
+}
+
+/* Make the filters card more compact */
+.transactions .card:nth-child(3) .card-header {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+}
+
+.transactions .card:nth-child(3) .card-title {
+  font-size: 18px;
 }
 
 .search-box {
   flex: 1;
 }
 
+.search-box .form-input {
+  padding: 10px 14px;
+  min-height: 40px;
+  font-size: 14px;
+}
+
 .filter-controls {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+/* Date Range Filter Styles */
+.date-range-filter {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(226, 232, 240, 0.4);
+}
+
+.date-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.date-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin: 0;
+}
+
+.date-input {
+  padding: 10px 12px;
+  font-size: 14px;
+  min-height: 40px;
+  border-radius: 8px;
+  border: 2px solid rgba(226, 232, 240, 0.6);
+  background: white;
+  color: #374151;
+  transition: all 0.3s ease;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.date-input:hover {
+  border-color: rgba(226, 232, 240, 0.8);
+}
+
+.clear-date-btn {
+  padding: 6px 12px;
+  font-size: 12px;
+  min-height: 32px;
+  border-radius: 6px;
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+  transition: all 0.3s ease;
+}
+
+.clear-date-btn:hover {
+  background: #e5e7eb;
+  color: #374151;
+  border-color: #9ca3af;
 }
 
 /* No Transactions Styles */
@@ -395,6 +476,22 @@
     gap: 16px;
   }
   
+  .date-range-filter {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+  
+  .date-inputs {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .date-input {
+    padding: 12px 14px;
+    font-size: 15px;
+    min-height: 44px;
+  }
+  
   .type-selector {
     flex-direction: column;
     gap: 12px;
@@ -514,5 +611,200 @@
   
   .no-transactions-description {
     font-size: 13px;
+  }
+}
+
+/* Pagination Styles */
+.pagination-controls {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(226, 232, 240, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.pagination-info {
+  text-align: center;
+}
+
+.pagination-text {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-ellipsis {
+  color: #64748b;
+  font-weight: 600;
+  padding: 0 8px;
+}
+
+.pagination-buttons .btn {
+  min-width: 44px;
+  padding: 8px 12px;
+  font-size: 14px;
+  min-height: 40px;
+}
+
+.pagination-buttons .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quick-navigation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.quick-nav-text {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.quick-nav-input {
+  width: 60px;
+  padding: 6px 8px;
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+  background: white;
+  color: #374151;
+}
+
+.quick-nav-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.quick-nav-total {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Mobile responsive pagination */
+@media (max-width: 768px) {
+  .pagination-controls {
+    margin-top: 20px;
+    padding-top: 16px;
+    gap: 12px;
+  }
+  
+  .pagination-buttons {
+    gap: 8px;
+  }
+  
+  .page-numbers {
+    gap: 6px;
+  }
+  
+  .pagination-buttons .btn {
+    min-width: 40px;
+    padding: 6px 10px;
+    font-size: 13px;
+    min-height: 36px;
+  }
+  
+  .pagination-text {
+    font-size: 13px;
+  }
+  
+  .quick-navigation {
+    margin-top: 6px;
+    gap: 6px;
+  }
+  
+  .quick-nav-input {
+    width: 50px;
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+  
+  .quick-nav-text,
+  .quick-nav-total {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pagination-controls {
+    margin-top: 16px;
+    padding-top: 12px;
+    gap: 10px;
+  }
+  
+  .pagination-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .page-numbers {
+    order: -1;
+    margin-bottom: 8px;
+  }
+  
+  .pagination-buttons .btn {
+    min-width: 36px;
+    padding: 8px 12px;
+    font-size: 12px;
+    min-height: 32px;
+  }
+  
+  .quick-navigation {
+    margin-top: 4px;
+    gap: 4px;
+  }
+  
+  .quick-nav-input {
+    width: 45px;
+    padding: 3px 5px;
+    font-size: 11px;
+  }
+  
+  .quick-nav-text,
+  .quick-nav-total {
+    font-size: 11px;
+  }
+  
+  .date-range-filter {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  
+  .date-inputs {
+    gap: 8px;
+  }
+  
+  .date-input {
+    padding: 10px 12px;
+    font-size: 13px;
+    min-height: 36px;
+  }
+  
+  .clear-date-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+    min-height: 28px;
   }
 }
